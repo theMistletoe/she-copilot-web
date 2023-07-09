@@ -1,6 +1,31 @@
+"use client";
 import Image from 'next/image'
+import useRecorder from './hooks/useAudioRecoder';
 
 export default function Home() {
+  const { startRecording, stopRecording, recordedChunks } = useRecorder();
+
+  const handleStartRecording = () => {
+    console.log('handleStartRecording');
+    startRecording();
+  };
+
+  const handleStopRecording = () => {
+    console.log('handleStopRecording');
+    stopRecording();
+  };
+
+  const handleDownload = () => {
+    console.log('handleDownload');
+    if (recordedChunks.length > 0) {
+      const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'audio.webm';
+      link.click();
+    }
+  };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -107,6 +132,11 @@ export default function Home() {
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
         </a>
+        <div>
+          <button onClick={handleStartRecording}>Start Recording</button>
+          <button onClick={handleStopRecording}>Stop Recording</button>
+          <button onClick={handleDownload}>Download Recording</button>
+        </div>
       </div>
     </main>
   )
