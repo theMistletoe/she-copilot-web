@@ -141,7 +141,7 @@ const Home = () => {
                   <span
                     className="home-text"
                   >
-                    {responseData && <ReactMarkdown className='markdown' children={responseData} remarkPlugins={[remarkGfm]} />}
+                    {responseData && <ReactMarkdown className='markdown' remarkPlugins={[remarkGfm]} >{responseData}</ReactMarkdown>}
                     {/* <span>{responseData}</span> */}
                     <br></br>
                   </span>
