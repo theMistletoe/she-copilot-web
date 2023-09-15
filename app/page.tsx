@@ -16,17 +16,8 @@ import remarkGfm from 'remark-gfm';
 const Home = () => {
 
   const [isLoading, setIsLoading] = useState(false);
-  const [responseData, setResponseData] = useState<string | undefined>(`# カスタマージャーニーの物語
-
-  1. **顧客の存在**： あるところに顧客がいました。  
-  2. **既存の代替品選択**： 特定のジョブをする時には、顧客は既存の代替品を選択していました。
-  3. **スイッチングトリガーによる破壊**： ある日、既存の代替品がスイッチングトリガーによって破壊されてしまいました。 
-  4. **既存代替品の課題認識**： 既存の代替品には課題があるため、顧客は既存の代替品がジョブの最良の選択肢でないことに気づきました。 
-  5. **他のソリューションの探求**： 顧客は他のソリューションを探しました。他の代替品を検討するようになりました。
-  6. **最良の選択肢の発見**： 最終的には、顧客は正しい代替品を見つけました。
-  7. **カスタマージャーニーの可視化**： この物語はカスタマージャーニーとして可視化できます。
-  `);
-  const [mode, setMode] = useState<'start' | 'talking' | 'thinking' | 'result'>('result');
+  const [responseData, setResponseData] = useState<string | undefined>("");
+  const [mode, setMode] = useState<'start' | 'talking' | 'thinking' | 'result'>('start');
 
   const {
       transcript,
@@ -86,10 +77,12 @@ const Home = () => {
             <Header />
           </div>
           <div className="home-main">
-            <img
+            <Image
               alt="image"
               src="/rubberduck.png"
               className="home-image"
+              width={200}
+              height={200}
             />
             <div className="home-container2">
               {mode === 'start' && (
