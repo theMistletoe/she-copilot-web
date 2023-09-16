@@ -54,7 +54,7 @@ const Home = () => {
           .then((data) => {
             console.log(data);
             
-            setResponseData(data.reply);
+            setResponseData(data.reply.trim("\`\`\`").trim("\n"));
             setMode('result');
           })
           .catch((err) => {
