@@ -13,10 +13,10 @@ export async function POST(request: NextRequest) {
     
     const chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
-        "あなたは提示された文章の文脈や構造を理解し、理解しやすい形に構造化・整理することが得意です。返却するのはMarkdownのテキストです。"
+        "あなたは提示された文章の文脈や構造を理解し、人間が理解しやすい形に構造化・整理することが得意です。\n"
         ),
-        HumanMessagePromptTemplate.fromTemplate("以下の文章の文脈を汲み取り、誤字脱字と推測される部分を適切に修正した上で、人間が理解しやすい形で構造化したMarkdown形式で出力してください。返却するのはあなたが整理したMarkdownテキストのみにしてください。「{text}」"),
-        HumanMessagePromptTemplate.fromTemplate("以降が結果のMarkdownテキストです。"),
+        HumanMessagePromptTemplate.fromTemplate("以下の文章の文脈を汲み取り、誤字脱字と推測される部分を適切に修正した上で、人間が理解しやすい形で構造化したMarkdown形式で出力してください。返却するのはあなたが整理したMarkdownテキストのみにしてください。「{text}」\n"),
+        HumanMessagePromptTemplate.fromTemplate("以下が結果のMarkdownテキストです。\n"),
       ]);
       
       const chat_prompt = (await chatPrompt.formatPromptValue({
