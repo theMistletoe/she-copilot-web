@@ -56,6 +56,10 @@ const Home = () => {
             
             setResponseData(data.reply);
             setMode('result');
+          })
+          .catch((err) => {
+            console.error(err);
+            alert("エラーが発生しました。もう一度やり直してください。");
           });
       } catch (err: any) {
           console.error(err);

@@ -7,26 +7,32 @@ import {
 } from "langchain/prompts";
 
 export async function POST(request: NextRequest) {
-    const { talk_text } = await request.json();
+  try {
 
+    const { talk_text } = await request.json();
+    
     const chatPrompt = ChatPromptTemplate.fromPromptMessages([
-        SystemMessagePromptTemplate.fromTemplate(
-          "あなたは提示された文章の文脈や構造を理解し、理解しやすい形に構造化・整理することが得意です。返却するのはMarkdownのテキストです。"
+      SystemMessagePromptTemplate.fromTemplate(
+        "あなたは提示された文章の文脈や構造を理解し、理解しやすい形に構造化・整理することが得意です。返却するのはMarkdownのテキストです。"
         ),
         HumanMessagePromptTemplate.fromTemplate("以下の文章の文脈を汲み取り、誤字脱字と推測される部分を適切に修正した上で、人間が理解しやすい形で構造化したMarkdown形式で出力してください。返却するのはあなたが整理したMarkdownテキストのみにしてください。「{text}」"),
         HumanMessagePromptTemplate.fromTemplate("以降が結果のMarkdownテキストです。"),
-    ]);
-
-    const chat_prompt = (await chatPrompt.formatPromptValue({
+      ]);
+      
+      const chat_prompt = (await chatPrompt.formatPromptValue({
         text: talk_text,
       })).toChatMessages();
-
-    const chat = new ChatOpenAI({
+      
+      const chat = new ChatOpenAI({
         modelName: "gpt-4",
         temperature: 0.7,
-    });
-
-    const response = await chat.call(chat_prompt);
-
-    return NextResponse.json({reply: response.content});
+      });
+      
+      const response = await chat.call(chat_prompt);
+      
+      return NextResponse.json({reply: response.content});
+    } catch (error) {
+      console.error(error);
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    };
 }
